@@ -68,9 +68,18 @@ def Add(pgl):
 
         else:
             CAR = BinarySum(CAR, "1")
-        ad = "1000011"
-        Fetch(ad)
+        #ad = "1000011"
+        Fetch("1000011")
+        Add(CAR)
     elif pgl = "0000001":
+        dr = mar
+        cond = 1
+        if cond == 1:
+            CAR = ad
+        elif cond == 0:
+            CAR = BinarySum(CAR, "1")
+        Add(CAR)
+    elif pgl = ""
 
     # Second argument
 
