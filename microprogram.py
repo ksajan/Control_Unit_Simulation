@@ -139,8 +139,28 @@ def Branch(arre_babu):
             CAR = BinarySum(CAR, "1")
         Fetch("1000011")
         Branch("0000111")
-    elif arre_babu
+    elif arre_babu == "0000111":
+        pc = ar
+        cond = 1
+        if cond == 1:
+            CAR = ad
+        elif cond == 0:
+            CAR = BinarySum(CAR, "1")
+        Fetch("1000000")
+"""
+    One of the branch file is missing as its contradicting with one of its own condition have to think how to add it lets disicuss
 
+    Got any idea lets do it.
+    Branch code which is contradicting and I can't understand it purpose 
+
+    elif = "0000101"
+        cond = 1
+        if cond == 1:
+            CAR = ad
+        elif cond == 0:
+            car = BinarySum(CAR, "1")
+        Fetch("1000000")
+"""
 def Fetch(joker):
     print(" Binary calling address %s", joker)
     while True:
