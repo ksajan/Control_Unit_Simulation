@@ -11,18 +11,48 @@ BR = {"00":"JMP", "01":"CALL", "10":"RET", "11":"MAP"}
 MALAIN = {"0000":"ADD", "0001":"BRANCH", "0010":"STORE", "0011":"EXCHANGE"}
 
 CAR =""
-pc = 0
+pc = 1
 ac = ""
-ar = ""
+ar = 0
 dr = ""
 mpc = ""
 ad = ""
 mar = ""
+SBR = ""
+
+# This function adds two binary  
+# strings return the resulting string 
+def BinarySum(x, y): 
+        max_len = max(len(x), len(y)) 
+  
+        x = x.zfill(max_len) 
+        y = y.zfill(max_len) 
+          
+        # initialize the result 
+        result = '' 
+          
+        # initialize the carry 
+        carry = 0
+  
+        # Traverse the string 
+        for i in range(max_len - 1, -1, -1): 
+            r = carry 
+            r += 1 if x[i] == '1' else 0
+            r += 1 if y[i] == '1' else 0
+            result = ('1' if r % 2 == 1 else '0') + result 
+            carry = 0 if r < 2 else 1     # Compute the carry. 
+          
+        if carry !=0 : result = '1' + result 
+  
+        return result.zfill(max_len) 
+
+
+
 def Exchange(lol):
     
     # Starting Address will be decimal 12 binary 0001100
-    if lol = "0001100"
-        cond = dr[1]
+    if lol == "0001100":
+        cond = dr[0]
         if cond == 1:
             CAR, SBR = ad, BinarySum(CAR, "1")
         elif cond == 0:
@@ -37,7 +67,7 @@ def Exchange(lol):
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
         Exchange("0001110") # don't complain about why i didn't use CAR value directly because I am confused how its value changing across different function
-    elif lol = "0001110":
+    elif lol == "0001110":
         ac = dr
         dr = ac
         cond = 1
@@ -54,14 +84,14 @@ def Exchange(lol):
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
         Fetch("1000000") #As you have reached the end of the Exchange Microroutine so calling to get new instruction
-        print("Next address generated is : %s" CAR)
+        print("Next address generated is : %s", CAR)
     
 
 def Add(pgl):
     print("Binary address %s", ad)
     # First argument
     
-    if pgl = "0000000":
+    if pgl == "0000000":
         cond = dr[0]
         if cond == 1:
             CAR, SBR = ad, BinarySum(CAR, "1")
@@ -71,7 +101,7 @@ def Add(pgl):
         #ad = "1000011"
         Fetch("1000011")
         Add(CAR)
-    elif pgl = "0000001":
+    elif pgl == "0000001":
         dr = mar
         cond = 1
         if cond == 1:
@@ -79,7 +109,7 @@ def Add(pgl):
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
         Add(CAR)
-    elif pgl = "0000010":
+    elif pgl == "0000010":
         ac = ac + dr # Same check for the data type of ac if its binary string please change this to ac = BinarySum(ac, dr) Thanks in advance!
         cond = 1
         if cond == 1:
@@ -135,7 +165,7 @@ def Branch(arre_babu):
         cond = dr[0]
         if cond == 1:
             CAR, SBR = ad, BinarySum(CAR, "1")
-        elif == 0:
+        elif cond == 0:
             CAR = BinarySum(CAR, "1")
         Fetch("1000011")
         Branch("0000111")
@@ -163,46 +193,50 @@ def Branch(arre_babu):
 """
 def Fetch(joker):
     print(" Binary calling address %s", joker)
-    while True:
+    #while True:
         #first argument
-        if joker = " 1000000":
-            ar = pc
-            cond = 0
-            if cond == 1:
-                CAR = ad
-            elif cond == 0:
-                CAR = BinarySum(CAR, "1")
-            
-            Fetch("1000001")
-        elif joker = "1000001":
-            dr = mar
-            pc += 1
-            cond = 0    
-            if cond == 1:
-                CAR = ad
-            elif == 0:
-                CAR = BinarySum(CAR, "1")
-            
-            Fetch("1000010")
-        elif joker = "1000010":
-            ar = dr[6:]
-            cond = 1
-            # Address mapping process
-            CAR = "00" + dr[1:5] + "0"
+    if joker == "1000000":
+        #print(joker)
+        CAR = joker
+        #ar = pc
+        cond = 0
+        if cond == 1:
+            #print(CAR)
+            CAR = ad
+            #print(CAR)  
+        elif cond == 0:
+            CAR = BinarySum(CAR, "1")
+            print(CAR)    
+        Fetch("1000001")
+    elif joker == "1000001":
+        dr = mar
+        #pc += 1
+        cond = 0    
+        if cond == 1:
+            CAR = ad
+        elif cond == 0:
+            CAR = BinarySum(CAR, "1")
+        print(CAR)    
+        Fetch("1000010")
+    elif joker == "1000010":
+        ar = dr[6:]
+        cond = 1
+        # Address mapping process
+        CAR = "00" + dr[1:5] + "0"
 
-            if CAR == "0001100":
-                Exchange(CAR)
-                break
-            elif CAR == "0000000":
-                Add(CAR)
-                break
-            elif CAR == "0000100":
-                Branch(CAR)
-                break
-            elif CAR == "0001000":
-                Store(CAR)
-                break       
-        
+        if CAR == "0001100":
+            Exchange(CAR)
+        #    break
+        elif CAR == "0000000":
+            Add(CAR)
+        #    break
+        elif CAR == "0000100":
+            Branch(CAR)
+         #   break
+        elif CAR == "0001000":
+            Store(CAR)
+    #        break       
+        #    break
 
     
 
@@ -211,7 +245,7 @@ def Indrct(joker):
     print(" Binary calling address %s", joker)
 
     #first argument
-    if joker = " 1000011":
+    if joker == " 1000011":
         dr = mar
         cond = 1
         if cond == 1:
@@ -219,7 +253,7 @@ def Indrct(joker):
         else:
             CAR = BinarySum(CAR, "1")
         Fetch("1000100")
-    elif joker = "1000100":
+    elif joker == "1000100":
         ar = dr[6:]
         cond = 1    # No use I don't understand the point of having this condition as 1
         CAR = SBR
@@ -243,23 +277,26 @@ def Indrct(joker):
 
 
 myfile = open("outbin.txt", 'rt')
-contents = myfile.read()
+dr = myfile.read()
 myfile.close()
 #print(contents[:4])
 
-Opcode = contents[:4]
+Opcode = dr[:4]
     
 if Opcode in MALAIN:
     Symbol = MALAIN.get(Opcode)
-    if Symbol == EXCHANGE:
-        Exchange()
+    if Symbol == MALAIN["0011"]:
+        Fetch("1000000")
+        #Exchange()
     elif Symbol == ADD:
-        Add()
-    elif Symbol == BRANCH:
-        Branch()
-    elif Symbol == STORE:
-        Store()        
+        #Add()
+#    elif Symbol == BRANCH:
+        #Branch()
+#    elif Symbol == STORE:
+        #Store()        
         print("reached")
+else:
+    print("error")
         
     #print(Symbol)
 
