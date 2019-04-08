@@ -62,7 +62,7 @@ def Add(pgl):
     # First argument
     
     if pgl = "0000000":
-        cond = dr[15]
+        cond = dr[0]
         if cond == 1:
             CAR, SBR = ad, BinarySum(CAR, "1")
 
@@ -79,15 +79,67 @@ def Add(pgl):
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
         Add(CAR)
-    elif pgl = ""
+    elif pgl = "0000010":
+        ac = ac + dr # Same check for the data type of ac if its binary string please change this to ac = BinarySum(ac, dr) Thanks in advance!
+        cond = 1
+        if cond == 1:
+            CAR = ad
+        elif cond == 0:
+            CAR = BinarySum(CAR, "1")
+        Fetch("1000000")
+        # add print statement this the last microroutine in add as last 4th routine is doing nothing
+
 
     # Second argument
 
     #Fetch(ad)
-def Store():
-    pass
-def Branch():
-    pass
+def Store(tal_nappi):
+    if tal_nappi == "0001000":
+        cond = dr[0]
+        if cond == 1:
+            CAR, SBR = ad, BinarySum(CAR, "1")
+
+        else:
+            CAR = BinarySum(CAR, "1")
+        Indrct("1000011")
+        Store("0001001")
+    elif tal_nappi == "0001001":
+        dr = ac
+        cond = 1
+        if cond == 1:
+            CAR = ad
+        elif cond == 0:
+            CAR = BinarySum(CAR, "1")
+        store("0001010")
+    elif tal_nappi == "0001010":
+        mar = dr
+        cond = 1
+        if cond == 1:
+            CAR = ad
+        elif cond == 0:
+            CAR = BinarySum(CAR, "1")
+        Fetch("1000000") # end of the this Store function as next address will be fetched hopefully!
+
+    
+def Branch(arre_babu):
+    print("Chalo abo print kardo :%s", arre_babu)
+    if arre_babu == "0000100":
+        # Please change the below code line 128 as it can be incorrect as i don't what value ac store 
+        cond = ac[15]   # this might wil be changed according to what ac values it store
+        if cond == 1:
+            CAR = ad
+        elif cond == 0:
+            CAR = BinarySum(CAR, "1")
+        Branch("0000110")
+    elif arre_babu == "0000110":
+        cond = dr[0]
+        if cond == 1:
+            CAR, SBR = ad, BinarySum(CAR, "1")
+        elif == 0:
+            CAR = BinarySum(CAR, "1")
+        Fetch("1000011")
+        Branch("0000111")
+    elif arre_babu
 
 def Fetch(joker):
     print(" Binary calling address %s", joker)
@@ -101,7 +153,7 @@ def Fetch(joker):
             elif cond == 0:
                 CAR = BinarySum(CAR, "1")
             
-            Fetch(CAR)
+            Fetch("1000001")
         elif joker = "1000001":
             dr = mar
             pc += 1
@@ -111,7 +163,7 @@ def Fetch(joker):
             elif == 0:
                 CAR = BinarySum(CAR, "1")
             
-            Fetch(CAR)
+            Fetch("1000010")
         elif joker = "1000010":
             ar = dr[6:]
             cond = 1
