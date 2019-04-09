@@ -11,7 +11,7 @@ BR = {"00":"JMP", "01":"CALL", "10":"RET", "11":"MAP"}
 MALAIN = {"0000":"ADD", "0001":"BRANCH", "0010":"STORE", "0011":"EXCHANGE"}
 
 CAR =""
-pc = 1
+pc = 0
 ac = ""
 ar = 0
 
@@ -19,7 +19,7 @@ dr = "0011000000000000"
 
 mpc = ""
 ad = ""
-mar = ""
+mar = "0011000000000000"
 SBR = ""
 
 # This function adds two binary  
@@ -50,8 +50,9 @@ def BinarySum(x, y):
 
 
 
-def Exchange(lol):
+def Exchange(lol, ac):
     global dr,CAR
+    print("function call hua kya")
     # Starting Address will be decimal 12 binary 0001100
     if lol == "0001100":
         cond = dr[0]
@@ -59,8 +60,9 @@ def Exchange(lol):
             CAR, SBR = ad, BinarySum(CAR, "1")
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
+        print(CAR, dr)
         Indrct("1000011")    # Not able to reach back to this point by executing indirect cycle
-        Exchange("0001101")
+        Exchange("0001101",ac)
     elif lol == "0001101":
         ac = ac + dr # check for the dat type of ac if its binary string please change this statement to ac = BinarySum(ac, dr) as dr is string binary no. so confused
         cond = 1
@@ -68,7 +70,8 @@ def Exchange(lol):
             CAR = ad
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
-        Exchange("0001110") # don't complain about why i didn't use CAR value directly because I am confused how its value changing across different function
+        Exchange("0001110", ac) 
+        print("kuch toh likh ", CAR, ac)# don't complain about why i didn't use CAR value directly because I am confused how its value changing across different function
     elif lol == "0001110":
         ac = dr
         dr = ac
@@ -77,7 +80,8 @@ def Exchange(lol):
             CAR = ad
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
-        Exchange("0001111")
+        Exchange("0001111", ac)
+        print(CAR,ac, dr)
     elif lol == "0001111":
         mar = dr
         cond = 1
@@ -85,8 +89,9 @@ def Exchange(lol):
             CAR = ad
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
+        print("Next address generated is : ", CAR)
         Fetch("1000000") #As you have reached the end of the Exchange Microroutine so calling to get new instruction
-        print("Next address generated is : %s", CAR)
+        
     
 
 def Add(pgl):
@@ -194,7 +199,7 @@ def Branch(arre_babu):
         Fetch("1000000")
 """
 def Fetch(joker):
-    global CAR, dr
+    global CAR, dr, pc
     print("hello ", dr)
     print(" Binary calling address %s", joker)
     #while True:
@@ -213,8 +218,8 @@ def Fetch(joker):
             print(CAR)    
         Fetch("1000001")
     elif joker == "1000001":
-        #dr = mar
-        #pc += 1
+        dr = mar
+        pc += 1
         cond = 0    
         if cond == 1:
             CAR = ad
@@ -232,8 +237,13 @@ def Fetch(joker):
         print("CAR: %s", CAR)
 
         if CAR == "0001100":
+            print("pc value is",pc)
             print("callin function exchange")
-            Exchange(CAR, )
+            if pc == 1:
+                Exchange(CAR, ac)
+            else:
+                print("ho gaya")
+            
         #    break
         elif CAR == "0000000":
             Add(CAR)
