@@ -50,23 +50,26 @@ def BinarySum(x, y):
 
 
 
-def Exchange(lol, ac):
-    global dr,CAR
+def Exchange(lol, ac, CAR, dr, SBR, ad, mar, pc):
+    #global dr,CAR
+    #print("car value initial me kya hai", CAR)
     #print("function call hua kya")
     # Starting Address will be decimal 12 binary 0001100
     if lol == "0001100":
         cond = int(dr[0])
+        
         if cond == 1:
             #print("le lia")
             CAR, SBR = ad, BinarySum(CAR, "1")
         elif cond == 0:
             #print("pahucha kya")
             CAR = BinarySum(CAR, "1")
-            print("Next Binary address called in Exchange", CAR)
+            #print("execute ho raha hai kya", CAR)
+        print("Next Binary address called in Exchange\n", CAR)
         #print(CAR)
         #print("ahlkhd")
         Indrct("1000011", CAR, dr)    # Not able to reach back to this point by executing indirect cycle
-        Exchange("0001101",ac)
+        Exchange("0001101",ac, CAR, dr, SBR, ad, mar, pc)
     elif lol == "0001101":
         ac = ac + dr
         print("ac value", ac) # check for the dat type of ac if its binary string please change this statement to ac = BinarySum(ac, dr) as dr is string binary no. so confused
@@ -75,8 +78,8 @@ def Exchange(lol, ac):
             CAR = ad
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
-        print(" Next Binary address called in exchange , CAR: , ac: ", CAR, ac)
-        Exchange("0001110", ac) 
+        print(" Next Binary address called in exchange , CAR: , ac: \n", CAR, ac)
+        Exchange("0001110", ac, CAR, dr, SBR, ad, mar, pc) 
         # don't complain about why i didn't use CAR value directly because I am confused how its value changing across different function
     elif lol == "0001110":
         ac = dr
@@ -86,8 +89,8 @@ def Exchange(lol, ac):
             CAR = ad
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
-        print("Final address called in exchange function value of CAR:%s ac:%s dr: %s", CAR, ac, dr)
-        Exchange("0001111", ac)
+        print("Final address called in exchange function value of CAR: ac: dr: \n", CAR, ac, dr)
+        Exchange("0001111", ac, CAR, dr, SBR, ad, mar, pc)
     elif lol == "0001111":
         mar = dr
         cond = 1
@@ -95,9 +98,10 @@ def Exchange(lol, ac):
             CAR = ad
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
-        print("Next address generated is : ", CAR, ad, mar)
+        #print("Next address generated is : \n", CAR, ad, mar)
+        print("according to condition fetching new address after succesful completiont of exchange micro routine ")
         print(" Calling Fetch Cycle for next instruction cycle")
-        Fetch("1000000") #As you have reached the end of the Exchange Microroutine so calling to get new instruction
+        Fetch("1000000", CAR, pc, dr,mar, ac) #As you have reached the end of the Exchange Microroutine so calling to get new instruction
         
     
 
@@ -205,8 +209,8 @@ def Branch(arre_babu):
             car = BinarySum(CAR, "1")
         Fetch("1000000")
 """
-def Fetch(joker):
-    global CAR, dr, pc
+def Fetch(joker, CAR, pc, dr, mar, ac):
+    
     #print("hello ", dr)
     print(" Binary calling address ", joker)
     #while True:
@@ -223,17 +227,18 @@ def Fetch(joker):
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
             print(CAR)    
-        Fetch("1000001")
+        Fetch("1000001", CAR, pc, dr, mar, ac)
     elif joker == "1000001":
         dr = mar
         pc += 1
+        #print(pc)
         cond = 0    
         if cond == 1:
             CAR = ad
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
         print(CAR)    
-        Fetch("1000010")
+        Fetch("1000010", CAR, pc, dr, mar, ac)
     elif joker == "1000010":
         ar = dr[6:]
         cond = 1
@@ -247,7 +252,7 @@ def Fetch(joker):
             #print("pc value is",pc)
             print("callin function exchange")
             if pc == 1:
-                Exchange(CAR, ac)
+                Exchange(CAR, ac, CAR, dr, SBR, ad, mar, pc) #(lol, ac, CAR, dr, SBR, ad, mar, pc)
             else:
                 print("Successfuly completed one cycle")
             
@@ -313,7 +318,7 @@ Opcode = dr[:4]
 if Opcode in MALAIN:
     Symbol = MALAIN.get(Opcode)
     if Symbol == MALAIN["0011"]:
-        Fetch("1000000")
+        Fetch("1000000", CAR, pc, dr, mar, ac)
         print("end of the execution")
         #Exchange()
     elif Symbol == ADD:
