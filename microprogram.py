@@ -14,7 +14,9 @@ CAR =""
 pc = 1
 ac = ""
 ar = 0
-dr = ""
+
+dr = "0011000000000000"
+
 mpc = ""
 ad = ""
 mar = ""
@@ -49,7 +51,7 @@ def BinarySum(x, y):
 
 
 def Exchange(lol):
-    
+    global dr,CAR
     # Starting Address will be decimal 12 binary 0001100
     if lol == "0001100":
         cond = dr[0]
@@ -192,6 +194,8 @@ def Branch(arre_babu):
         Fetch("1000000")
 """
 def Fetch(joker):
+    global CAR, dr
+    print("hello ", dr)
     print(" Binary calling address %s", joker)
     #while True:
         #first argument
@@ -209,7 +213,7 @@ def Fetch(joker):
             print(CAR)    
         Fetch("1000001")
     elif joker == "1000001":
-        dr = mar
+        #dr = mar
         #pc += 1
         cond = 0    
         if cond == 1:
@@ -222,10 +226,14 @@ def Fetch(joker):
         ar = dr[6:]
         cond = 1
         # Address mapping process
+        print("nuhi",dr) 
+        
         CAR = "00" + dr[1:5] + "0"
+        print("CAR: %s", CAR)
 
         if CAR == "0001100":
-            Exchange(CAR)
+            print("callin function exchange")
+            Exchange(CAR, )
         #    break
         elif CAR == "0000000":
             Add(CAR)
@@ -242,6 +250,7 @@ def Fetch(joker):
 
 
 def Indrct(joker):
+    global CAR, dr
     print(" Binary calling address %s", joker)
 
     #first argument
@@ -280,6 +289,7 @@ myfile = open("outbin.txt", 'rt')
 dr = myfile.read()
 myfile.close()
 #print(contents[:4])
+print(dr)
 
 Opcode = dr[:4]
     
