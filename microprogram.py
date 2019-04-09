@@ -68,17 +68,17 @@ def Exchange(lol, ac, CAR, dr, SBR, ad, mar, pc):
         print("Next Binary address called in Exchange\n", CAR)
         #print(CAR)
         #print("ahlkhd")
-        Indrct("1000011", CAR, dr)    # Not able to reach back to this point by executing indirect cycle
+        #Indrct("1000011", CAR, dr)    # Not able to reach back to this point by executing indirect cycle
         Exchange("0001101",ac, CAR, dr, SBR, ad, mar, pc)
     elif lol == "0001101":
         ac = ac + dr
-        print("ac value", ac) # check for the dat type of ac if its binary string please change this statement to ac = BinarySum(ac, dr) as dr is string binary no. so confused
-        cond = 1
+        #print("ac value", ac) # check for the dat type of ac if its binary string please change this statement to ac = BinarySum(ac, dr) as dr is string binary no. so confused
+        cond = 0
         if cond == 1:
             CAR = ad
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
-        print(" Next Binary address called in exchange , CAR: , ac: \n", CAR, ac)
+        print(" Next Binary address called in exchange , CAR:\n", CAR)
         Exchange("0001110", ac, CAR, dr, SBR, ad, mar, pc) 
         # don't complain about why i didn't use CAR value directly because I am confused how its value changing across different function
     elif lol == "0001110":
@@ -99,8 +99,8 @@ def Exchange(lol, ac, CAR, dr, SBR, ad, mar, pc):
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
         #print("Next address generated is : \n", CAR, ad, mar)
-        print("according to condition fetching new address after succesful completiont of exchange micro routine ")
-        print(" Calling Fetch Cycle for next instruction cycle")
+        print("according to condition fetching new address after succesful completiont of exchange micro routine\n")
+        print(" Calling Fetch Cycle for next instruction cycle\n")
         Fetch("1000000", CAR, pc, dr,mar, ac) #As you have reached the end of the Exchange Microroutine so calling to get new instruction
         
     
@@ -212,7 +212,7 @@ def Branch(arre_babu):
 def Fetch(joker, CAR, pc, dr, mar, ac):
     
     #print("hello ", dr)
-    print(" Binary calling address ", joker)
+    print(" Binary calling address in Fetch", joker)
     #while True:
         #first argument
     if joker == "1000000":
@@ -226,7 +226,7 @@ def Fetch(joker, CAR, pc, dr, mar, ac):
             #print(CAR)  
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
-            print(CAR)    
+            print("Next Binary Address called in Fetch cycle\n",CAR)    
         Fetch("1000001", CAR, pc, dr, mar, ac)
     elif joker == "1000001":
         dr = mar
@@ -237,7 +237,7 @@ def Fetch(joker, CAR, pc, dr, mar, ac):
             CAR = ad
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
-        print(CAR)    
+        print("Next Binary Address called in Fetch cycle\n",CAR)        
         Fetch("1000010", CAR, pc, dr, mar, ac)
     elif joker == "1000010":
         ar = dr[6:]
@@ -283,7 +283,7 @@ def Indrct(joker, CAR, dr):
             CAR = ad
         else:
             CAR = BinarySum(CAR, "1")
-        Fetch("1000100")
+        Indrct("1000100", CAR, dr)
     elif joker == "1000100":
         ar = dr[6:]
         cond = 1    # No use I don't understand the point of having this condition as 1
@@ -311,7 +311,7 @@ myfile = open("outbin.txt", 'rt')
 dr = myfile.read()
 myfile.close()
 #print(contents[:4])
-print(dr)
+#print(dr)
 
 Opcode = dr[:4]
     
