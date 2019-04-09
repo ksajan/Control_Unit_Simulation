@@ -52,7 +52,7 @@ def BinarySum(x, y):
 
 def Exchange(lol, ac):
     global dr,CAR
-    print("function call hua kya")
+    #print("function call hua kya")
     # Starting Address will be decimal 12 binary 0001100
     if lol == "0001100":
         cond = dr[0]
@@ -70,8 +70,9 @@ def Exchange(lol, ac):
             CAR = ad
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
+        print( CAR, ac)
         Exchange("0001110", ac) 
-        print("kuch toh likh ", CAR, ac)# don't complain about why i didn't use CAR value directly because I am confused how its value changing across different function
+        # don't complain about why i didn't use CAR value directly because I am confused how its value changing across different function
     elif lol == "0001110":
         ac = dr
         dr = ac
@@ -200,8 +201,8 @@ def Branch(arre_babu):
 """
 def Fetch(joker):
     global CAR, dr, pc
-    print("hello ", dr)
-    print(" Binary calling address %s", joker)
+    #print("hello ", dr)
+    print(" Binary calling address ", joker)
     #while True:
         #first argument
     if joker == "1000000":
@@ -231,18 +232,18 @@ def Fetch(joker):
         ar = dr[6:]
         cond = 1
         # Address mapping process
-        print("nuhi",dr) 
+        #print("nuhi",dr) 
         
         CAR = "00" + dr[1:5] + "0"
-        print("CAR: %s", CAR)
+        print("CAR: ", CAR)
 
         if CAR == "0001100":
-            print("pc value is",pc)
+            #print("pc value is",pc)
             print("callin function exchange")
             if pc == 1:
                 Exchange(CAR, ac)
             else:
-                print("ho gaya")
+                print("Successfuly completed one cycle")
             
         #    break
         elif CAR == "0000000":
@@ -261,7 +262,7 @@ def Fetch(joker):
 
 def Indrct(joker):
     global CAR, dr
-    print(" Binary calling address %s", joker)
+    print(" Binary calling address in indiect cycle", joker)
 
     #first argument
     if joker == " 1000011":
