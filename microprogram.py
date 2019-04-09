@@ -237,7 +237,7 @@ def Fetch(joker, CAR, pc, dr, mar, ac):
     elif joker == "1000001":
         dr = mar
         pc += 1
-        #print(pc)
+        print("pc value incremented",pc)
         cond = 0    
         if cond == 1:
             CAR = ad
