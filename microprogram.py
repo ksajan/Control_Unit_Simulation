@@ -61,7 +61,7 @@ def Exchange(lol, ac):
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
         print(CAR, dr)
-        Indrct("1000011")    # Not able to reach back to this point by executing indirect cycle
+        Indrct("1000011", CAR, dr)    # Not able to reach back to this point by executing indirect cycle
         Exchange("0001101",ac)
     elif lol == "0001101":
         ac = ac + dr # check for the dat type of ac if its binary string please change this statement to ac = BinarySum(ac, dr) as dr is string binary no. so confused
@@ -260,8 +260,8 @@ def Fetch(joker):
     
 
 
-def Indrct(joker):
-    global CAR, dr
+def Indrct(joker, CAR, dr):
+    #global CAR, dr
     print(" Binary calling address in indiect cycle", joker)
 
     #first argument
