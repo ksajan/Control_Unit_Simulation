@@ -65,7 +65,9 @@ def Exchange(lol, ac, CAR, dr, SBR, ad, mar, pc):
             #print("pahucha kya")
             CAR = BinarySum(CAR, "1")
             #print("execute ho raha hai kya", CAR)
+        print("*********************************************")
         print("Next Binary address called in Exchange\n", CAR)
+        print("*********************************************")
         #print(CAR)
         #print("ahlkhd")
         #Indrct("1000011", CAR, dr)    # Not able to reach back to this point by executing indirect cycle
@@ -78,7 +80,9 @@ def Exchange(lol, ac, CAR, dr, SBR, ad, mar, pc):
             CAR = ad
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
+        print("*****************************************************\n")
         print(" Next Binary address called in exchange , CAR:\n", CAR)
+        print("*****************************************************")
         Exchange("0001110", ac, CAR, dr, SBR, ad, mar, pc) 
         # don't complain about why i didn't use CAR value directly because I am confused how its value changing across different function
     elif lol == "0001110":
@@ -226,7 +230,9 @@ def Fetch(joker, CAR, pc, dr, mar, ac):
             #print(CAR)  
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
-            print("Next Binary Address called in Fetch cycle\n",CAR)    
+            print("***********************************************\n")
+            print("Next Binary Address called in Fetch cycle\n",CAR)
+            print("***********************************************\n")    
         Fetch("1000001", CAR, pc, dr, mar, ac)
     elif joker == "1000001":
         dr = mar
@@ -237,7 +243,10 @@ def Fetch(joker, CAR, pc, dr, mar, ac):
             CAR = ad
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
-        print("Next Binary Address called in Fetch cycle\n",CAR)        
+        print("************************************************\n")
+        print("Next Binary Address called in Fetch cycle\n",CAR)   
+        print("************************************************\n")
+
         Fetch("1000010", CAR, pc, dr, mar, ac)
     elif joker == "1000010":
         ar = dr[6:]
@@ -250,11 +259,13 @@ def Fetch(joker, CAR, pc, dr, mar, ac):
 
         if CAR == "0001100":
             #print("pc value is",pc)
-            print("callin function exchange")
+            print("callin function exchange\n")
             if pc == 1:
                 Exchange(CAR, ac, CAR, dr, SBR, ad, mar, pc) #(lol, ac, CAR, dr, SBR, ad, mar, pc)
             else:
+                print("#################################")
                 print("Successfuly completed one cycle")
+                print("#################################\n")
             
         #    break
         elif CAR == "0000000":
@@ -273,7 +284,9 @@ def Fetch(joker, CAR, pc, dr, mar, ac):
 
 def Indrct(joker, CAR, dr):
     #global CAR, dr
+    print("*****************************************************")
     print(" Binary calling address in indiect cycle", joker)
+    print("*****************************************************")
 
     #first argument
     if joker == " 1000011":
