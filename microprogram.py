@@ -55,22 +55,27 @@ def Exchange(lol, ac):
     #print("function call hua kya")
     # Starting Address will be decimal 12 binary 0001100
     if lol == "0001100":
-        cond = dr[0]
+        cond = int(dr[0])
         if cond == 1:
+            #print("le lia")
             CAR, SBR = ad, BinarySum(CAR, "1")
         elif cond == 0:
+            #print("pahucha kya")
             CAR = BinarySum(CAR, "1")
-        print(CAR, dr)
+            print("Next Binary address called in Exchange", CAR)
+        #print(CAR)
+        #print("ahlkhd")
         Indrct("1000011", CAR, dr)    # Not able to reach back to this point by executing indirect cycle
         Exchange("0001101",ac)
     elif lol == "0001101":
-        ac = ac + dr # check for the dat type of ac if its binary string please change this statement to ac = BinarySum(ac, dr) as dr is string binary no. so confused
+        ac = ac + dr
+        print("ac value", ac) # check for the dat type of ac if its binary string please change this statement to ac = BinarySum(ac, dr) as dr is string binary no. so confused
         cond = 1
         if cond == 1:
             CAR = ad
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
-        print( CAR, ac)
+        print(" Next Binary address called in exchange , CAR: , ac: ", CAR, ac)
         Exchange("0001110", ac) 
         # don't complain about why i didn't use CAR value directly because I am confused how its value changing across different function
     elif lol == "0001110":
@@ -81,8 +86,8 @@ def Exchange(lol, ac):
             CAR = ad
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
+        print("Final address called in exchange function value of CAR:%s ac:%s dr: %s", CAR, ac, dr)
         Exchange("0001111", ac)
-        print(CAR,ac, dr)
     elif lol == "0001111":
         mar = dr
         cond = 1
@@ -90,7 +95,8 @@ def Exchange(lol, ac):
             CAR = ad
         elif cond == 0:
             CAR = BinarySum(CAR, "1")
-        print("Next address generated is : ", CAR)
+        print("Next address generated is : ", CAR, ad, mar)
+        print(" Calling Fetch Cycle for next instruction cycle")
         Fetch("1000000") #As you have reached the end of the Exchange Microroutine so calling to get new instruction
         
     
@@ -308,6 +314,7 @@ if Opcode in MALAIN:
     Symbol = MALAIN.get(Opcode)
     if Symbol == MALAIN["0011"]:
         Fetch("1000000")
+        print("end of the execution")
         #Exchange()
     elif Symbol == ADD:
         #Add()
