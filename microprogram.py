@@ -49,7 +49,7 @@ def BinarySum(x, y):
         return result.zfill(max_len) 
 
 
-
+# Micro routiune function
 def Exchange(lol, ac, CAR, dr, SBR, ad, mar, pc):
     #global dr,CAR
     #print("car value initial me kya hai", CAR)
